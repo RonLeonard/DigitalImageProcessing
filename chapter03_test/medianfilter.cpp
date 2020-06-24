@@ -6,7 +6,7 @@
 #include <time.h>
 using namespace cv;
 
-void swap(uchar a, uchar b)
+void swap(uchar &a, uchar &b)
 {
 	uchar tmp;
 	tmp = a;
@@ -18,7 +18,7 @@ void swap(uchar a, uchar b)
 uchar calMedian(uchar win[WIN_SIZE])
 {
 	for (int gap = WIN_SIZE / 2; gap > 0; gap /= 2)
-		for (int i = gap; i < 9; i++)
+		for (int i = gap; i < WIN_SIZE; i++)
 			for (int j = i - gap; j >= 0 && win[j] > win[j + gap]; j -= gap)
 				swap(win[j], win[j + gap]);
 	return win[WIN_SIZE / 2];
@@ -96,13 +96,14 @@ void median_filter(const Mat& src, Mat& dst)
 
 int main(int argc, char** argv)
 {
-	uchar win[9] = { 1, 2, 3, 4, 6, 7, 8, 9, 10 };
+	//test calMedian
+	uchar win[9] = { 1, 5,  10 ,11, 18, 7, 8, 9 , 4};
 	int ret = 0;
 	ret = calMedian(win);
 	printf("ret = %d\n", ret);
 
 
-	Mat src, src_salt, dst;
+	Mat src, src_salt, dst, dst2;
 	src = imread("pic/lenna.jpg");
 	if (src.empty())
 	{
@@ -115,8 +116,8 @@ int main(int argc, char** argv)
 	imshow("src", src);
 	median_filter(src, dst);
 	imshow("dst", dst);
-
-	imwrite("pic/dst.jpg", dst);
+	medianBlur(src, dst2, 3);
+	imshow("dst2", dst2);
 	waitKey(0);
 }
 
