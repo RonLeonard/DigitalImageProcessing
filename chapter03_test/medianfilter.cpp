@@ -1,4 +1,4 @@
-#define MEDIAN_FILTER
+//#define MEDIAN_FILTER
 #ifdef MEDIAN_FILTER
 
 
