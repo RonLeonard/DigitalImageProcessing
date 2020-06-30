@@ -1,4 +1,4 @@
-#define SOBELFILTER
+//#define SOBELFILTER
 #ifdef SOBELFILTER
 
 #include <opencv.hpp>
